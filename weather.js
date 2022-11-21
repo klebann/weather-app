@@ -5,7 +5,7 @@ const WeatherApp = class {
 
 		this.coordinatesLink = `http://api.openweathermap.org/geo/1.0/direct?q={query}&appid=${apiKey}`;
 		this.currentWeatherLink = `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=${apiKey}&units=metric`;
-		this.forecastLink = `https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=${apiKey}`;
+		this.forecastLink = `https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=${apiKey}&units=metric`;
 	}
 
 	getCurrentWeather(query) {
@@ -48,13 +48,20 @@ const WeatherApp = class {
 					return response.json();
 				})
 				.then((data) => {
-					console.log(data);
+					this.drawForecastWeather(data.list);
 				});
 		});
 	}
 
 	getWeather(query) {
 
+	}
+	
+	drawForecastWeather(forecastWeather) {
+		for (let i = 0; i < forecastWeather.length; i++) {
+			let weather = forecastWeather[i];
+			this.drawWeather(weather);
+		}
 	}
 
 	drawWeather(weather) {
