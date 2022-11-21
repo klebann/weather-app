@@ -5,8 +5,7 @@ const WeatherApp = class {
     	
 			this.coordinatesLink = `http://api.openweathermap.org/geo/1.0/direct?q={query}&appid=${apiKey}`;
 			this.currentWeatherLink = `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=${apiKey}&units=metric`;
-			
-			this.currentWeather = undefined;
+			this.forecastLink = `https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=${apiKey}`;
 		}
 
     getCurrentWeather(query) {
@@ -41,7 +40,17 @@ const WeatherApp = class {
 		}
 
     getForecast(query) {
-
+			this.getCoordinates(query, (lat, lon) => {
+				let url = this.forecastLink.replace("{lat}", lat);
+				url = url.replace("{lon}", lon);
+				fetch(url)
+					.then((response) => {
+						return response.json();
+					})
+					.then((data) => {
+						console.log(data);
+					});
+			});
     }
 
     getWeather(query) {
@@ -97,5 +106,5 @@ document.weatherApp = new WeatherApp("7ded80d91f2b280ec979100cc8bbba94", "#weath
 
 document.querySelector("#checkButton").addEventListener("click", function() {
     const query = document.querySelector("#locationInput").value;
-    document.weatherApp.getCurrentWeather(query);
+    document.weatherApp.getForecast(query);
 });
