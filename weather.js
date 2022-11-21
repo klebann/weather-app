@@ -15,7 +15,7 @@ const WeatherApp = class {
 				url = url.replace("{lon}", lon);
 				this.sendReq(url, (currentWeather) => {
 					console.log(currentWeather);
-					//this.drawWeather(currentWeather);
+					this.drawWeather(currentWeather);
 				})
 			});
     }
@@ -52,10 +52,10 @@ const WeatherApp = class {
 			const date = new Date(currentWeather.dt * 1000);
 			const weatherBlock = this.createWeatherBlock(
 				`${date.toLocaleDateString("pl-PL")} ${date.toLocaleTimeString("pl-PL")}`,
-				21.12,
-				24.21,
-				'04n',
-				'broken clouds'
+				currentWeather.main.temp,
+				currentWeather.main.feels_like,
+				currentWeather.weather[0].icon,
+				currentWeather.weather[0].description
 			);
 			this.resultsBlock.appendChild(weatherBlock);
     }
