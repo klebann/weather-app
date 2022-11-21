@@ -2,23 +2,62 @@ const WeatherApp = class {
     constructor(apiKey, resultsBlockSelector) {
 			this.apiKey = apiKey;
 			this.resultsBlock = document.querySelector(resultsBlockSelector);
-    }
+    	
+			this.coordinatesLink = `http://api.openweathermap.org/geo/1.0/direct?q={query}&appid=${apiKey}`;
+			this.currentWeatherLink = `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=${apiKey}&units=metric`;
+			
+			this.currentWeather = undefined;
+		}
 
     getCurrentWeather(query) {
-
+			this.getCoordinates(query, (lat, lon) => {
+				let url = this.currentWeatherLink.replace("{lat}", lat);
+				url = url.replace("{lon}", lon);
+				this.sendReq(url, (currentWeather) => {
+					console.log(currentWeather);
+					//this.drawWeather(currentWeather);
+				})
+			});
     }
+	
+		getCoordinates(query, callbackFunction) {
+			let url = this.coordinatesLink.replace("{query}", query);
+			this.sendReq(url, (response) => {
+				const coordinates = response[0];
+				const lat = coordinates.lat;
+				const lon = coordinates.lon;
+				callbackFunction(lat, lon);
+			})
+		}
+	
+		sendReq(url, callbackFunction) {
+			let req = new XMLHttpRequest();
+			req.open("GET", url, true);
+			req.addEventListener("load", () => {
+				const response = JSON.parse(req.responseText);
+				callbackFunction(response);
+			});
+			req.send();
+		}
 
     getForecast(query) {
 
     }
 
     getWeather(query) {
-			const weatherBlock = this.createWeatherBlock('2020-11-20 23:24', 21.12, 24.21, '04n', 'broken clouds');
-			this.resultsBlock.appendChild(weatherBlock);
+			
     }
 
-    drawWeather() {
-
+    drawWeather(currentWeather) {
+			const date = new Date(currentWeather.dt * 1000);
+			const weatherBlock = this.createWeatherBlock(
+				`${date.toLocaleDateString("pl-PL")} ${date.toLocaleTimeString("pl-PL")}`,
+				21.12,
+				24.21,
+				'04n',
+				'broken clouds'
+			);
+			this.resultsBlock.appendChild(weatherBlock);
     }
 
     createWeatherBlock(dateString, temperature, feelsLikeTemperature, iconName, description) {
@@ -58,5 +97,5 @@ document.weatherApp = new WeatherApp("7ded80d91f2b280ec979100cc8bbba94", "#weath
 
 document.querySelector("#checkButton").addEventListener("click", function() {
     const query = document.querySelector("#locationInput").value;
-    document.weatherApp.getWeather(query);
+    document.weatherApp.getCurrentWeather(query);
 });
