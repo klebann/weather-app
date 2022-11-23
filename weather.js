@@ -13,7 +13,6 @@ const WeatherApp = class {
 			let url = this.currentWeatherLink.replace("{lat}", lat);
 			url = url.replace("{lon}", lon);
 			this.sendReq(url, (currentWeather) => {
-				console.log(currentWeather);
 				this.drawWeather(currentWeather);
 			})
 		});
@@ -54,7 +53,9 @@ const WeatherApp = class {
 	}
 
 	getWeather(query) {
-
+		this.resultsBlock.innerHTML = '';
+		this.getCurrentWeather(query);
+		this.getForecast(query);
 	}
 	
 	drawForecastWeather(forecastWeather) {
@@ -113,5 +114,5 @@ document.weatherApp = new WeatherApp("7ded80d91f2b280ec979100cc8bbba94", "#weath
 
 document.querySelector("#checkButton").addEventListener("click", function () {
 	const query = document.querySelector("#locationInput").value;
-	document.weatherApp.getForecast(query);
+	document.weatherApp.getWeather(query);
 });
