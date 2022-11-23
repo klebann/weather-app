@@ -3,7 +3,7 @@ const WeatherApp = class {
 		this.apiKey = apiKey;
 		this.resultsBlock = document.querySelector(resultsBlockSelector);
 
-		this.coordinatesLink = `http://api.openweathermap.org/geo/1.0/direct?q={query}&appid=${apiKey}`;
+		this.coordinatesLink = `https://api.openweathermap.org/geo/1.0/direct?q={query}&appid=${apiKey}`;
 		this.currentWeatherLink = `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=${apiKey}&units=metric`;
 		this.forecastLink = `https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=${apiKey}&units=metric`;
 	}
