@@ -7,3 +7,7 @@
 * XMLHttpRequests to display current weather (https://openweathermap.org/current)
 * Fetch API to display forecast weather for 5 days (https://openweathermap.org/forecast5)
 * Coordinates by location name (API) - https://openweathermap.org/api/geocoding-api
+
+## Demo
+
+https://klebann.github.io/weather-app/
