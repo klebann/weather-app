@@ -47,7 +47,6 @@ const WeatherApp = class {
 					return response.json();
 				})
 				.then((data) => {
-					console.log(data);
 					this.drawForecastWeather(data.list);
 				});
 		});
