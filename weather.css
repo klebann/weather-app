@@ -1,57 +1,83 @@
+body, html {
+  height: 100%;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;	
+}
+
 body {
-    font-family: sans-serif;
+	font-family: sans-serif;
+	background-image: url("img/background.jpg");
+	background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+	background-attachment: fixed;
 }
 
-#weather-search-params, #weather-results-container {
-    width: 350px;
-    margin: 15px auto;
-    text-align: center;
+#weather-search-params,
+#weather-results-container {
+	margin: 15px auto;
+	text-align: center;
 }
 
-.weather-block {
-    display: block;
-    width: 350px;
-    height: 120px;
-    border: 1px solid #c0c0c0;
-    position: relative;
-    margin: 15px auto;
-    text-align: left;
+.weather-block-current {
+	display: block;
+	width: 250px;
+	height: 120px;
+	border: 2px solid white;
+	position: relative;
+	margin: 15px auto;
+	text-align: left;
+	border-radius: 20px;
+	background-color: skyblue;
+}
+
+.weather-block-forecast {
+	display: inline-block;
+	width: 225px;
+	height: 120px;
+	border: 2px solid white;
+	position: relative;
+	margin: 3px;
+	text-align: left;
+	border-radius: 20px;
+	background-color: skyblue;
 }
 
 .weather-date {
-    font-weight: bold;
-    width: 350px;
-    text-align: left;
-    position: absolute;
-    left: 5px;
-    top: 5px;
-    font-size: 20px;
+	font-weight: bold;
+	width: 250px;
+	text-align: left;
+	position: absolute;
+	left: 5px;
+	top: 5px;
+	font-size: 20px;
 }
 
 .weather-icon {
-    position: absolute;
-    top: 20px;
-    left: 0;
-    width: 100px;
-    height: 100px;
+	position: absolute;
+	top: 20px;
+	left: 0;
+	width: 100px;
+	height: 100px;
 }
 
 .weather-temperature {
-    position: absolute;
-    top: 30px;
-    left: 110px;
-    font-size: 33px;
-    font-weight: bold;
+	position: absolute;
+	top: 30px;
+	left: 110px;
+	font-size: 33px;
+	font-weight: bold;
 }
 
 .weather-temperature-feels-like {
-    position: absolute;
-    top: 70px;
-    left: 110px;
+	position: absolute;
+	top: 70px;
+	left: 110px;
 }
 
 .weather-description {
-    position: absolute;
-    top: 90px;
-    left: 110px;
+	position: absolute;
+	top: 90px;
+	left: 110px;
 }

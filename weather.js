@@ -13,7 +13,7 @@ const WeatherApp = class {
 			let url = this.currentWeatherLink.replace("{lat}", lat);
 			url = url.replace("{lon}", lon);
 			this.sendReq(url, (currentWeather) => {
-				this.drawWeather(currentWeather);
+				this.drawWeather(currentWeather, true);
 			})
 		});
 	}
@@ -47,6 +47,7 @@ const WeatherApp = class {
 					return response.json();
 				})
 				.then((data) => {
+					console.log(data);
 					this.drawForecastWeather(data.list);
 				});
 		});
@@ -54,32 +55,54 @@ const WeatherApp = class {
 
 	getWeather(query) {
 		this.resultsBlock.innerHTML = '';
+		
 		this.getCurrentWeather(query);
 		this.getForecast(query);
 	}
 	
 	drawForecastWeather(forecastWeather) {
+		const headerForecast = document.createElement("h2");
+		headerForecast.innerHTML = "Forecast Weather:";
+		this.resultsBlock.appendChild(headerForecast);
+		
 		for (let i = 0; i < forecastWeather.length; i++) {
+			if (i % 8 == 0) {
+				const dayHeader = document.createElement("h3");
+				dayHeader.innerHTML = "Day " + (i/8 + 1) + ":";
+				this.resultsBlock.appendChild(dayHeader);
+			}
+			
 			let weather = forecastWeather[i];
 			this.drawWeather(weather);
 		}
 	}
 
-	drawWeather(weather) {
+	drawWeather(weather, isCurrent = false) {
+		if (isCurrent) {
+			const headerCurrent = document.createElement("h2");
+			headerCurrent.innerHTML = "Current Weather:";
+			this.resultsBlock.appendChild(headerCurrent);
+		}
+		
 		const date = new Date(weather.dt * 1000);
 		const weatherBlock = this.createWeatherBlock(
 			`${date.toLocaleDateString("pl-PL")} ${date.toLocaleTimeString("pl-PL")}`,
 			weather.main.temp,
 			weather.main.feels_like,
 			weather.weather[0].icon,
-			weather.weather[0].description
+			weather.weather[0].description,
+			isCurrent
 		);
 		this.resultsBlock.appendChild(weatherBlock);
 	}
 
-	createWeatherBlock(dateString, temperature, feelsLikeTemperature, iconName, description) {
+	createWeatherBlock(dateString, temperature, feelsLikeTemperature, iconName, description, isCurrent) {
 		const weatherBlock = document.createElement("div");
-		weatherBlock.className = 'weather-block';
+		if (isCurrent) {
+			weatherBlock.className = 'weather-block-current';
+		} else {
+			weatherBlock.className = 'weather-block-forecast';
+		}
 
 		const dateBlock = document.createElement("div");
 		dateBlock.className = "weather-date";
