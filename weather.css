@@ -34,7 +34,7 @@ body {
 
 .weather-block-forecast {
 	display: inline-block;
-	width: 225px;
+	width: 250px;
 	height: 120px;
 	border: 2px solid white;
 	position: relative;
